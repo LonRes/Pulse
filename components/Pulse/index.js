@@ -19,6 +19,7 @@ export default function Pulse({ models }) {
         })
 
         return () => {
+            socket.off('property')
             socket.close()
         }
     }, [])
