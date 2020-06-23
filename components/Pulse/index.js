@@ -12,20 +12,34 @@ const Map = dynamic(() => import('@app/Map'), {
 
 export default function Pulse({ models }) {
     const [cache, setCache] = React.useState(models)
+
     React.useEffect(() => {
         const socket = io()
         socket.open().on('property', ({ message: { model } }) => {
-            setCache([
-                model,
-                ...cache,
-            ])
+            const found = cache.findIndex(
+                cached => model.address1 === cached.address1
+            )
+
+            if(found > -1) {
+                setCache([
+                    ...cache.slice(0, found),
+                    model,
+                    ...cache.slice(found + 1),
+                ])
+            }
+            else {
+                setCache([
+                    model,
+                    ...cache,
+                ])
+            }
         })
 
         return () => {
             socket.off('property')
             socket.close()
         }
-    }, [])
+    }, [cache])
 
     return (
         <e.Container>
