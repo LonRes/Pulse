@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import * as rl from 'react-leaflet';
-import { useRef, useCallback } from 'react';
+import {
+    useCallback,
+    useRef,
+    useState,
+} from 'react';
 import { useMount } from 'react-use';
 import { createIcon, getBounds } from './utils';
 import * as e from './styles';
 
 export default function Map({ models }) {
+    const [center, setCenter] = useState([51.505, -0.09])
     const ref = useRef();
 
     const handleFitBounds = useCallback(() => {
@@ -16,7 +21,7 @@ export default function Map({ models }) {
 
     return (
         <e.Container>
-            <rl.Map ref={ref} center={[51.505, -0.09]} zoom={13}>
+            <rl.Map ref={ref} center={center} zoom={13}>
                 <rl.TileLayer url="https://cartodb-basemaps-a.global.ssl.fastly.net/light_all/{z}/{x}/{y}@2x.png" />
 
                 {models.map((model) => (
