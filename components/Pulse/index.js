@@ -12,6 +12,7 @@ const Map = dynamic(() => import('@app/Map'), {
 
 export default function Pulse({ models }) {
     const [cache, setCache] = React.useState(models)
+    const [center, setCenter] = React.useState([51.505, -0.09]);
 
     React.useEffect(() => {
         const socket = io()
@@ -43,7 +44,10 @@ export default function Pulse({ models }) {
 
     return (
         <e.Container>
-            <Map models={cache} />
+            <Map
+                center={center}
+                models={cache}
+            />
             <Properties models={cache} />
         </e.Container>
     );

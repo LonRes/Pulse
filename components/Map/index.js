@@ -9,8 +9,10 @@ import { useMount } from 'react-use';
 import { createIcon, getBounds } from './utils';
 import * as e from './styles';
 
-export default function Map({ models }) {
-    const [center, setCenter] = useState([51.505, -0.09])
+export default function Map({
+    center,
+    models,
+}) {
     const ref = useRef();
 
     const handleFitBounds = useCallback(() => {
