@@ -12,8 +12,8 @@ const Map = dynamic(() => import('@app/Map'), {
 
 export default function Pulse({ models }) {
     const [cache, setCache] = React.useState(models)
-    const [center, setCenter] = React.useState([51.505, -0.09]);
 
+    // properties list
     React.useEffect(() => {
         const socket = io()
         socket.open().on('property', ({ message: { model } }) => {
@@ -42,13 +42,24 @@ export default function Pulse({ models }) {
         }
     }, [cache])
 
+
+    // map centering
+    const [center, setCenter] = React.useState([51.505, -0.09]);
+
+    function onPropertyClicked ({ coordinates: { lat, lng } }) {
+        setCenter([lat, lng]);
+    }
+
     return (
         <e.Container>
             <Map
                 center={center}
                 models={cache}
             />
-            <Properties models={cache} />
+            <Properties
+                onPropertyClicked={onPropertyClicked}
+                models={cache}
+            />
         </e.Container>
     );
 }

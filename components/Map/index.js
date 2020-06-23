@@ -3,7 +3,6 @@ import * as rl from 'react-leaflet';
 import {
     useCallback,
     useRef,
-    useState,
 } from 'react';
 import { useMount } from 'react-use';
 import { createIcon, getBounds } from './utils';
