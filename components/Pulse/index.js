@@ -15,7 +15,10 @@ export default function Pulse({ models }) {
     React.useEffect(() => {
         const socket = io()
         socket.open().on('property', ({ message: { model } }) => {
-            console.log(model)
+            setCache([
+                model,
+                ...cache,
+            ])
         })
 
         return () => {
