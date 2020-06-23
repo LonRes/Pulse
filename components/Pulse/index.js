@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import dynamic from 'next/dynamic';
@@ -10,6 +11,7 @@ const Map = dynamic(() => import('@app/Map'), {
 });
 
 export default function Pulse({ models }) {
+    const [cache, setCache] = React.useState(models)
     React.useEffect(() => {
         const socket = io()
         socket.open().on('property', ({ message: { model } }) => {
@@ -23,8 +25,8 @@ export default function Pulse({ models }) {
 
     return (
         <e.Container>
-            <Map models={models} />
-            <Properties models={models} />
+            <Map models={cache} />
+            <Properties models={cache} />
         </e.Container>
     );
 }
